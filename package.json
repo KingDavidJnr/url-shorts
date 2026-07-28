@@ -2,9 +2,16 @@
   "name": "url-shorts",
   "version": "1.0.0",
   "description": "A simple GraphQL API backend service for a URL shortening app",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
   },
   "keywords": [],
   "author": "",

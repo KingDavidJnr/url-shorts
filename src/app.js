@@ -4,6 +4,7 @@ const { ApolloServer } = require('apollo-server-express');
 const schema = require('./graphql/schema');
 const { createContext } = require('./context');
 const redirectRouter = require('./routes/redirect');
+const { AppError } = require('./errors');
 
 const app = express();
 
@@ -16,9 +17,12 @@ async function startApolloServer() {
   const server = new ApolloServer({
     schema,
     context: createContext,
-    formatError: (formattedError) => {
-      const { message } = formattedError;
-      return { message };
+    formatError: (formattedError, error) => {
+      const originalError = error.originalError;
+      if (originalError instanceof AppError) {
+        return { message: originalError.message };
+      }
+      return { message: 'Internal server error' };
     },
   });
 

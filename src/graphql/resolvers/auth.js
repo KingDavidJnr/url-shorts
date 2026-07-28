@@ -1,5 +1,6 @@
 const authService = require('../../services/authService');
 const { validateRegisterInput, validateLoginInput } = require('../../validators');
+const { UnauthorizedError } = require('../../errors');
 
 const authResolvers = {
   Mutation: {
@@ -19,7 +20,6 @@ const authResolvers = {
   Query: {
     me: async (_, __, { user }) => {
       if (!user) {
-        const { UnauthorizedError } = require('../../errors');
         throw new UnauthorizedError('Unauthorized');
       }
       return authService.getCurrentUser(user.userId);
